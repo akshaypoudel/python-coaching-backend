@@ -1,12 +1,9 @@
 from fastapi import HTTPException
-
 from fastapi import APIRouter
-
+from sqlalchemy.orm import selectinload
 from ..database import SessionLocal
-
 from ..models.student import Student
 from ..models.fee_payment import FeePayment
-from sqlalchemy.orm import selectinload
 from ..schemas.students.student_create import StudentCreate
 from ..schemas.students.student_response import StudentResponse
 
@@ -131,5 +128,58 @@ def get_students():
 
 
 
+
+@router.put(
+    "/students/{roll_number}",
+    response_model=StudentResponse,
+)
+def update_student(
+    roll_number: str,
+    data: StudentCreate,
+):
+    db = SessionLocal()
+
+    try:
+        student = (
+            db.query(Student)
+            .filter(Student.roll_number == roll_number)
+            .first()
+        )
+
+        if not student:
+            raise HTTPException(
+                status_code=404,
+                detail="Student not found",
+            )
+
+        # Update student fields
+        student.name = data.name
+        student.father_name = data.father_name
+        student.parents_phone = data.parents_phone
+        student.email = data.email
+        student.gender = data.gender
+        student.phone = data.phone
+        student.dob = data.dob
+        student.address = data.address
+        student.batch_time = data.batch_time
+        student.joining_date = data.joining_date
+        student.total_fees = data.total_fees
+        student.student_status = data.student_status
+        student.course = data.course
+
+        db.commit()
+        db.refresh(student)
+
+        student = (
+            db.query(Student)
+            .options(selectinload(Student.payments))
+            .filter(Student.roll_number == roll_number)
+            .first()
+        )
+
+        return student
+
+    finally:
+        db.close()
 
 
