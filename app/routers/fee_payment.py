@@ -21,7 +21,7 @@ def collect_fee(
 ):
     student = (
         db.query(Student)
-        .filter(Student.id == payment.student_id)
+        .filter(Student.roll_number == payment.roll_number)
         .first()
     )
 
@@ -44,9 +44,11 @@ def collect_fee(
         )
 
     new_payment = FeePayment(
-        student_id=payment.student_id,
+        roll_number=payment.roll_number,
         amount=payment.amount,
         payment_method=payment.payment_method,
+        payment_date=payment.payment_date,
+        received_by = payment.received_by,
         remarks=payment.remarks,
     )
 

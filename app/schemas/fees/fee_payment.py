@@ -5,7 +5,6 @@ from pydantic import BaseModel
 
 
 class FeePaymentCreate(BaseModel):
-    id: int
     roll_number: str
     amount: float
     payment_date: datetime
