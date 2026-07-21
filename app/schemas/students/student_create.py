@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import date
-from .fee_payment import FeePaymentCreate
+from ..fees.fee_payment import FeePaymentCreate
 
 
 class StudentCreate(BaseModel):

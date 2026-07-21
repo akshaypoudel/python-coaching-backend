@@ -1,4 +1,4 @@
-from app.schemas.fee_payment_response import FeePaymentResponse
+from app.schemas.fees.fee_payment_response import FeePaymentResponse
 from pydantic import BaseModel
 from datetime import date
 

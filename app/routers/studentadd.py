@@ -7,8 +7,8 @@ from ..database import SessionLocal
 from ..models.student import Student
 from ..models.fee_payment import FeePayment
 from sqlalchemy.orm import selectinload
-from ..schemas.student_create import StudentCreate
-from ..schemas.student_response import StudentResponse
+from ..schemas.students.student_create import StudentCreate
+from ..schemas.students.student_response import StudentResponse
 
 router = APIRouter()
 
