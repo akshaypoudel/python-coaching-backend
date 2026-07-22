@@ -4,7 +4,7 @@ from ..fees.fee_payment import FeePaymentCreate
 
 
 class StudentCreate(BaseModel):
-    roll_number: int
+    roll_number: str
     name: str
     gender: str
     dob: date
